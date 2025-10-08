@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Juana Saavedra — Lab</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-view="lab">
+    <div class="page-mask" aria-hidden="true"></div>
+    <div class="cursor" aria-hidden="true"></div>
+    <header class="site-header" data-router-link>
+      <nav>
+        <a class="logo" href="index.html" data-router-link>
+          <img src="assets/logo.svg" width="32" height="32" alt="Juana Saavedra" />
+          <span>Juana Saavedra</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html#servicios" data-router-link>Servicios</a>
+          <a href="index.html#trabajos" data-router-link>Trabajos</a>
+          <a href="index.html#sobre" data-router-link>Sobre mí</a>
+          <a href="index.html#contacto" data-router-link>Contacto</a>
+          <a href="lab.html" data-router-link>Lab</a>
+        </div>
+      </nav>
+    </header>
+    <main id="main" tabindex="-1">
+      <section class="section lab-hero" aria-labelledby="lab-title">
+        <h1 id="lab-title" data-split="line">Laboratorio creativo</h1>
+        <p class="reveal" data-content="labIntro"></p>
+        <p class="reveal">Explora trazas electrónicas, campos vectoriales editoriales y visuales audio-reactivos. Todo sin librerías externas.</p>
+      </section>
+      <section class="section lab-grid">
+        <article class="lab-demo" data-demo="traces">
+          <header>
+            <h3 data-split="line">Trazas PCB generativas</h3>
+            <p class="reveal">Un camino orgánico con bifurcaciones, cargas que viajan y textura editorial.</p>
+          </header>
+          <div class="lab-canvas" data-traces-canvas></div>
+        </article>
+        <article class="lab-demo" data-demo="vectors">
+          <header>
+            <h3 data-split="line">Campo vectorial artístico</h3>
+            <p class="reveal">Líneas de flujo que se curvan con el puntero, con sutiles gradientes rosados.</p>
+          </header>
+          <div class="lab-canvas" data-field-canvas></div>
+        </article>
+        <article class="lab-demo" data-demo="audio">
+          <header>
+            <h3 data-split="line">Audio reactivo analógico</h3>
+            <p class="reveal">Cargas que pulsan al ritmo del espectro usando Web Audio API.</p>
+          </header>
+          <div class="lab-canvas" data-audio-canvas></div>
+          <div class="audio-controls">
+            <label>
+              <span>Sube tu pista (MP3)</span>
+              <input type="file" accept="audio/mpeg" data-audio-upload />
+            </label>
+            <button class="btn btn-ghost" type="button" data-audio-toggle>Iniciar visual</button>
+          </div>
+        </article>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-inner">
+        <span>© <span data-current-year></span> Juana Saavedra.</span>
+        <div class="footer-trace" data-footer-trace></div>
+        <div class="socials">
+          <a href="mailto:jusaavedrar@ieee.org">Email</a>
+          <a href="https://wa.me/51999999999" target="_blank" rel="noreferrer">WhatsApp</a>
+          <a href="index.html" data-router-link>Inicio</a>
+        </div>
+      </div>
+    </footer>
+    <div class="lightbox" role="dialog" aria-modal="true" aria-labelledby="lightbox-title">
+      <div class="lightbox-content">
+        <button class="lightbox-prev" aria-label="Proyecto anterior">◀</button>
+        <button class="lightbox-next" aria-label="Proyecto siguiente">▶</button>
+        <button class="lightbox-close" aria-label="Cerrar">✕</button>
+        <div class="lightbox-img" id="lightbox-visual" role="img" aria-labelledby="lightbox-title"></div>
+        <h3 id="lightbox-title"></h3>
+        <p id="lightbox-desc"></p>
+      </div>
+    </div>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
