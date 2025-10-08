@@ -1,0 +1,29 @@
+{
+  "brand": "Juana Saavedra",
+  "hero": {
+    "title": "Diseño de experiencias + frontend con ciencia visual.",
+    "subtitle": "Prototipo, diseño y construyo interfaces con cálculo multivariado, redes neuronales y gráficos interactivos.",
+    "ctaPrimary": { "label": "Trabajemos juntos", "href": "jusaavedrar@ieee.org" },
+    "ctaSecondary": { "label": "Ver casos", "href": "#casos" }
+  },
+  "services": [
+    { "title": "UX Research & Strategy", "bullets": ["Entrevistas y mapas de experiencia", "Hipótesis verificables", "KPIs y éxito de producto"] },
+    { "title": "UI / Design Systems", "bullets": ["Componentes y tokens", "Accesibilidad AA/AAA", "Documentación viva"] },
+    { "title": "Frontend (React/Next)", "bullets": ["Rendimiento y SEO", "Integración de APIs", "CI/CD"] },
+    { "title": "Creative Coding (WebGL)", "bullets": ["R3F + shaders", "Microinteracciones", "Visualizaciones técnicas"] }
+  ],
+  "cases": [
+    { "slug": "proyecto-a", "title": "Interfaz de analítica interactiva", "tags": ["R3F","UX"], "impact": "↑30% conversión" },
+    { "slug": "proyecto-b", "title": "Design System accesible", "tags": ["UI","A11y"], "impact": "↓40% tiempo de entrega" },
+    { "slug": "proyecto-c", "title": "Demo de IA explicable", "tags": ["NN","Viz"], "impact": "↑retención sesión" }
+  ],
+  "about": {
+    "bio": "Ingeniera y frontend dev. Combino UX, R3F y ciencia de datos visual para construir experiencias claras, bellas y medibles.",
+    "skills": ["React/Next","TypeScript","Tailwind","R3F","Framer Motion","GSAP","Figma"],
+    "testimonials": [
+      { "quote": "Precisión técnica con una estética impecable.", "author": "Cliente SaaS" },
+      { "quote": "Las visualizaciones explican el producto por sí solas.", "author": "Startup IA" }
+    ]
+  },
+  "contact": { "title": "Cuéntame tu reto", "cta": "Enviar" }
+}

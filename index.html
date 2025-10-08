@@ -1,162 +1,196 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Juana Saavedra — Portfolio</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Juana Saavedra · UX + Frontend</title>
+    <meta name="description" content="Portafolio de Juana Saavedra, diseñadora UX y desarrolladora frontend especializada en experiencias interactivas." />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body data-view="home">
-    <div class="page-mask" aria-hidden="true"></div>
-    <div class="cursor" aria-hidden="true"></div>
-    <header class="site-header" data-router-link>
-      <nav>
-        <a class="logo" href="index.html" data-router-link>
-          <img src="assets/logo.svg" width="32" height="32" alt="Juana Saavedra" />
-          <span>Juana Saavedra</span>
+  <body>
+    <div class="intro-mask" aria-hidden="true"></div>
+    <header class="site-header" id="top">
+      <div class="container header-inner">
+        <a class="brand" href="#top" aria-label="Juana Saavedra">
+          <img src="assets/logo.svg" alt="Juana Saavedra" width="36" height="36" />
+          <span class="brand-name">Juana Saavedra</span>
         </a>
-        <div class="nav-links">
-          <a href="index.html#servicios" data-router-link>Servicios</a>
-          <a href="index.html#trabajos" data-router-link>Trabajos</a>
-          <a href="index.html#sobre" data-router-link>Sobre mí</a>
-          <a href="index.html#contacto" data-router-link>Contacto</a>
-          <a href="lab.html" data-router-link>Lab</a>
-        </div>
-      </nav>
+        <nav class="site-nav" aria-label="Principal">
+          <ul>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#trabajos">Trabajos</a></li>
+            <li><a href="#sobre-mi">Sobre mí</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </nav>
+      </div>
     </header>
-    <main id="main" tabindex="-1" data-timeline>
-      <section class="hero-stage" data-stage="hero" aria-labelledby="hero-title">
-        <div class="hero-sticky">
-          <div class="hero-grid">
-            <div class="hero-copy" data-hero-copy>
-              <p class="hero-label" data-split="word">INGENIERÍA + EXPERIENCIA</p>
-              <h1 id="hero-title" data-split="line">Interfaces editoriales para producto, datos y relato técnico.</h1>
-              <p class="hero-sub" data-content="heroSubtitle"></p>
-              <div class="hero-actions">
-                <a href="#contacto" class="btn btn-primary" data-magnetic data-router-link>Trabajemos juntos</a>
-                <a href="#trabajos" class="btn btn-ghost" data-router-link>Ver trabajos</a>
-              </div>
-            </div>
-            <aside class="hero-scene" data-parallax>
-              <div class="hero-card" data-microcard>
-                <svg class="microcontroller" viewBox="0 0 480 360" role="img" aria-label="Microcontrolador creativo">
-                  <defs>
-                    <linearGradient id="cardShade" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0%" stop-color="rgba(14,15,18,0.9)" />
-                      <stop offset="100%" stop-color="rgba(43,47,56,0.65)" />
-                    </linearGradient>
-                  </defs>
-                  <rect x="24" y="24" width="432" height="312" rx="28" fill="url(#cardShade)" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" />
-                  <g class="chip" transform="translate(160 120)">
-                    <rect width="160" height="120" rx="18" fill="#2B2F38" stroke="#FF5DA2" stroke-width="1.4" />
-                    <rect x="22" y="22" width="116" height="76" rx="12" fill="#0E0F12" stroke="rgba(255,255,255,0.08)" stroke-width="1.2" />
-                  </g>
-                  <g class="pads" stroke="#E6A3B2" stroke-width="4" stroke-linecap="round">
-                    <line x1="96" y1="56" x2="384" y2="56" />
-                    <line x1="96" y1="304" x2="384" y2="304" />
-                    <line x1="56" y1="96" x2="56" y2="264" />
-                    <line x1="424" y1="96" x2="424" y2="264" />
-                  </g>
-                  <g class="cables" stroke="rgba(255,93,162,0.55)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path data-cable="1" d="M240 180 C 240 140, 120 120, 72 96" />
-                    <path data-cable="2" d="M240 180 C 280 150, 408 144, 432 120" />
-                    <path data-cable="3" d="M240 180 C 220 220, 120 240, 64 280" />
-                    <path data-cable="4" d="M240 180 C 300 220, 388 240, 416 300" />
-                  </g>
-                  <g class="charges" fill="#F7F3ED">
-                    <circle r="3" data-charge="1"></circle>
-                    <circle r="3" data-charge="2"></circle>
-                    <circle r="3" data-charge="3"></circle>
-                    <circle r="3" data-charge="4"></circle>
-                  </g>
-                </svg>
-                <div class="hero-gradient" aria-hidden="true"></div>
-              </div>
-            </aside>
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <canvas class="hero-canvas" width="1280" height="720" aria-hidden="true"></canvas>
+        <div class="container hero-content">
+          <p class="eyebrow">Experiencias científicas + frontend</p>
+          <h1 id="hero-title" class="hero-title"><em>Diseño interfaces que combinan rigor y emoción.</em></h1>
+          <p class="hero-subtitle">
+            Exploro datos, diseño sistemas y construyo productos web performantes con una estética elegante y medible.
+          </p>
+          <div class="hero-cta">
+            <a class="btn btn-primary btn-magnetic" href="mailto:jusaavedrar@ieee.org">Trabajemos juntos</a>
+            <a class="btn btn-ghost" href="#trabajos">Ver trabajos</a>
           </div>
         </div>
       </section>
 
-      <section id="servicios" class="section services-stage" data-stage="services" aria-labelledby="services-title">
-        <h2 id="services-title" data-split="line">Servicios que unen método, sensibilidad y entrega.</h2>
-        <div class="services-grid" data-services></div>
-      </section>
-
-      <section id="trabajos" class="section projects-stage" data-stage="projects" aria-labelledby="works-title">
-        <div class="section-header">
-          <h2 id="works-title" data-split="line">Proyectos como módulos conectados de impacto.</h2>
-          <div class="works-filter" role="toolbar" aria-label="Filtrar proyectos" data-filters></div>
-        </div>
-        <div class="works-carousel" data-works></div>
-        <div class="cable-network" data-cable-network></div>
-      </section>
-
-      <section class="section manifesto-stage" data-stage="process" aria-labelledby="manifesto-title">
-        <div class="process-panel">
-          <h2 id="manifesto-title" data-split="line">Manifiesto y proceso editorial de ingeniería.</h2>
-          <p class="reveal" data-content="manifesto"></p>
-          <ul class="reveal" data-process></ul>
-        </div>
-      </section>
-
-      <section id="sobre" class="section about-stage" data-stage="about" aria-labelledby="about-title">
-        <div class="about-copy">
-          <h2 id="about-title" data-split="line">Perfil híbrido que traduce datos en experiencias humanas.</h2>
-          <p class="reveal" data-content="about"></p>
-          <div class="skill-chips" data-skills></div>
-        </div>
-        <div class="about-logos">
-          <h3 data-split="line">Colaboraciones</h3>
-          <div class="logo-row" data-logos></div>
+      <section id="servicios" class="section" aria-labelledby="servicios-title">
+        <div class="container">
+          <h2 id="servicios-title" class="section-title reveal"><em>Servicios</em></h2>
+          <div class="services-grid">
+            <article class="service-card reveal">
+              <h3><em>UX Research &amp; Strategy</em></h3>
+              <p>Entrevistas, mapas de experiencia y KPIs claros para validar hipótesis y guiar decisiones de producto.</p>
+            </article>
+            <article class="service-card reveal">
+              <h3><em>UI / Design Systems</em></h3>
+              <p>Tokens, componentes accesibles y documentación viva para escalar la consistencia visual.</p>
+            </article>
+            <article class="service-card reveal">
+              <h3><em>Frontend</em></h3>
+              <p>Implementación en React/Next, integración de APIs y rendimiento medido para experiencias fluidas.</p>
+            </article>
+            <article class="service-card reveal">
+              <h3><em>Creative Coding</em></h3>
+              <p>Prototipos WebGL, visualizaciones interactivas y microinteracciones que explican ideas complejas.</p>
+            </article>
+          </div>
         </div>
       </section>
 
-      <section id="contacto" class="section contact-stage" data-stage="contact" aria-labelledby="contact-title">
-        <div class="contact-inner">
-          <h2 id="contact-title" data-split="line">Contacto directo para un circuito de lanzamiento impecable.</h2>
-          <form class="contact-form" novalidate aria-describedby="contact-status">
-            <label>
-              <span>Nombre</span>
-              <input type="text" name="name" autocomplete="name" required />
-            </label>
-            <label>
-              <span>Email</span>
-              <input type="email" name="email" autocomplete="email" required />
-            </label>
-            <label>
-              <span>Mensaje</span>
-              <textarea name="message" required minlength="12"></textarea>
-            </label>
-            <button type="submit" class="btn btn-primary" data-magnetic>Enviar</button>
-            <p id="contact-status" class="status-message" aria-live="polite"></p>
+      <section id="trabajos" class="section" aria-labelledby="trabajos-title">
+        <div class="container">
+          <h2 id="trabajos-title" class="section-title reveal"><em>Trabajos destacados</em></h2>
+          <div class="works-grid">
+            <article class="work-card reveal">
+              <div class="work-media" aria-hidden="true"></div>
+              <div class="work-content">
+                <p class="work-tags">Analytics · R3F</p>
+                <h3><em>Panel de analítica inmersiva</em></h3>
+              </div>
+            </article>
+            <article class="work-card reveal">
+              <div class="work-media" aria-hidden="true"></div>
+              <div class="work-content">
+                <p class="work-tags">Design System · A11y</p>
+                <h3><em>Design system inclusivo</em></h3>
+              </div>
+            </article>
+            <article class="work-card reveal">
+              <div class="work-media" aria-hidden="true"></div>
+              <div class="work-content">
+                <p class="work-tags">AI · Visualización</p>
+                <h3><em>Explicador de IA transparente</em></h3>
+              </div>
+            </article>
+            <article class="work-card reveal">
+              <div class="work-media" aria-hidden="true"></div>
+              <div class="work-content">
+                <p class="work-tags">Fintech · UX</p>
+                <h3><em>Onboarding financiero sin fricción</em></h3>
+              </div>
+            </article>
+            <article class="work-card reveal">
+              <div class="work-media" aria-hidden="true"></div>
+              <div class="work-content">
+                <p class="work-tags">Investigación · Datos</p>
+                <h3><em>Laboratorio de insights colaborativos</em></h3>
+              </div>
+            </article>
+            <article class="work-card reveal">
+              <div class="work-media" aria-hidden="true"></div>
+              <div class="work-content">
+                <p class="work-tags">Educación · WebGL</p>
+                <h3><em>Simulador interactivo de campus</em></h3>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="sobre-mi" class="section" aria-labelledby="sobre-mi-title">
+        <div class="container about">
+          <div class="about-text reveal">
+            <h2 id="sobre-mi-title" class="section-title"><em>Sobre mí</em></h2>
+            <p>
+              Soy Juana Saavedra, ingeniera y diseñadora que combina investigación, sistemas de diseño y desarrollo frontend para crear productos digitales intuitivos y medibles.
+            </p>
+            <p>
+              Trabajo en ciclos iterativos, colaboro con equipos multidisciplinarios y traduzco complejidad técnica en experiencias claras.
+            </p>
+            <ul class="skill-list" aria-label="Habilidades principales">
+              <li>UX Research</li>
+              <li>Prototipado</li>
+              <li>Design Systems</li>
+              <li>React</li>
+              <li>TypeScript</li>
+              <li>WebGL</li>
+              <li>Accesibilidad</li>
+            </ul>
+          </div>
+          <div class="about-logos reveal" aria-label="Colaboraciones destacadas">
+            <svg viewBox="0 0 120 60" role="img" aria-label="Orion Labs">
+              <rect x="5" y="10" width="30" height="40" rx="6" fill="var(--surface)" opacity="0.12" />
+              <path d="M25 20c-7 0-12 5-12 12s5 12 12 12 12-5 12-12-5-12-12-12zm0 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12z" fill="var(--pink-500)" />
+              <text x="48" y="36" fill="var(--ink)" font-size="18" font-family="inherit">Orion</text>
+            </svg>
+            <svg viewBox="0 0 120 60" role="img" aria-label="Helix">
+              <path d="M20 45c20-30 40-30 60 0" fill="none" stroke="var(--pink-500)" stroke-width="4" stroke-linecap="round" />
+              <path d="M20 15c20 30 40 30 60 0" fill="none" stroke="var(--pink-300)" stroke-width="4" stroke-linecap="round" />
+              <circle cx="20" cy="45" r="4" fill="var(--ink)" />
+              <circle cx="80" cy="15" r="4" fill="var(--ink)" />
+              <text x="90" y="34" fill="var(--ink)" font-size="16" font-family="inherit">Helix</text>
+            </svg>
+            <svg viewBox="0 0 120 60" role="img" aria-label="Nova AI">
+              <polygon points="20,30 40,10 60,30 40,50" fill="var(--pink-600)" opacity="0.6" />
+              <polygon points="60,30 80,10 100,30 80,50" fill="var(--pink-500)" opacity="0.4" />
+              <text x="24" y="56" fill="var(--ink)" font-size="14" font-family="inherit">Nova AI</text>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <section id="contacto" class="section" aria-labelledby="contacto-title">
+        <div class="container">
+          <h2 id="contacto-title" class="section-title reveal"><em>Contacto</em></h2>
+          <form class="contact-form reveal" novalidate>
+            <div class="form-field">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" name="nombre" autocomplete="name" required />
+            </div>
+            <div class="form-field">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" autocomplete="email" required />
+            </div>
+            <div class="form-field">
+              <label for="mensaje">Mensaje</label>
+              <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
           </form>
         </div>
       </section>
     </main>
 
-    <footer>
-      <div class="footer-inner">
-        <span>© <span data-current-year></span> Juana Saavedra. Interfaces con ingeniería visual.</span>
-        <div class="footer-trace" data-footer-trace></div>
-        <div class="socials">
-          <a href="mailto:jusaavedrar@ieee.org">Email</a>
-          <a href="https://wa.me/51999999999" target="_blank" rel="noreferrer">WhatsApp</a>
-          <a href="https://www.behance.net" target="_blank" rel="noreferrer">Behance</a>
-        </div>
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>© <span id="year"></span> Juana Saavedra. Todos los derechos reservados.</p>
+        <ul class="footer-links">
+          <li><a href="https://www.linkedin.com" target="_blank" rel="noreferrer">LinkedIn</a></li>
+          <li><a href="https://www.behance.net" target="_blank" rel="noreferrer">Behance</a></li>
+          <li><a href="mailto:jusaavedrar@ieee.org">Email</a></li>
+        </ul>
       </div>
     </footer>
 
-    <div class="lightbox" role="dialog" aria-modal="true" aria-labelledby="lightbox-title">
-      <div class="lightbox-content">
-        <button class="lightbox-prev" aria-label="Proyecto anterior">◀</button>
-        <button class="lightbox-next" aria-label="Proyecto siguiente">▶</button>
-        <button class="lightbox-close" aria-label="Cerrar">✕</button>
-        <div class="lightbox-img" id="lightbox-visual" role="img" aria-labelledby="lightbox-title"></div>
-        <h3 id="lightbox-title"></h3>
-        <p id="lightbox-desc"></p>
-      </div>
-    </div>
-
-    <script type="module" src="app.js"></script>
+    <script src="app.js" defer></script>
   </body>
 </html>
