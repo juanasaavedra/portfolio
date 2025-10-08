@@ -1,13 +1,13 @@
-<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
-  <title id="title">Juana Saavedra Monograma</title>
-  <desc id="desc">Monograma circular con iniciales JS y acentos rosados</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
   <defs>
-    <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#FF5DA2" />
-      <stop offset="100%" stop-color="#E9488C" />
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff5da2" />
+      <stop offset="70%" stop-color="#e6a3b2" />
+      <stop offset="100%" stop-color="#d36b52" />
     </linearGradient>
   </defs>
-  <circle cx="60" cy="60" r="56" fill="none" stroke="url(#grad)" stroke-width="4" />
-  <path d="M38 82c8 8 20 10 28 0 6-7 7-20-4-26l-10-6c-6-4-6-12 0-16 5-3 13-1 16 4" fill="none" stroke="#FF7BB6" stroke-width="6" stroke-linecap="round" />
-  <path d="M73 38v44" stroke="#F3F4F6" stroke-width="6" stroke-linecap="round" />
+  <rect width="120" height="120" rx="20" fill="#0e0f12" />
+  <path d="M28 84l16-48 18 48 18-48 12 32" fill="none" stroke="url(#g)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="36" cy="92" r="4" fill="#ff5da2" />
+  <circle cx="84" cy="92" r="4" fill="#d36b52" />
 </svg>

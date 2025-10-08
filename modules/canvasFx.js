@@ -85,7 +85,7 @@ export function initCableNetwork(container, cards = []) {
     path.setAttribute('stroke-linecap', 'round');
     path.classList.add('network-cable');
     const pulse = document.createElementNS(svgNS, 'circle');
-    pulse.setAttribute('r', '5');
+    pulse.setAttribute('r', '3');
     pulse.setAttribute('fill', '#f7f3ed');
     pulse.setAttribute('opacity', '0');
     pulse.classList.add('network-pulse');
