@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Juana Saavedra — Case Study</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-view="case">
+    <div class="page-mask" aria-hidden="true"></div>
+    <div class="cursor" aria-hidden="true"></div>
+    <header class="site-header" data-router-link>
+      <nav>
+        <a class="logo" href="index.html" data-router-link>
+          <img src="assets/logo.svg" width="32" height="32" alt="Juana Saavedra" />
+          <span>Juana Saavedra</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html#servicios" data-router-link>Servicios</a>
+          <a href="index.html#trabajos" data-router-link>Trabajos</a>
+          <a href="index.html#sobre" data-router-link>Sobre mí</a>
+          <a href="index.html#contacto" data-router-link>Contacto</a>
+          <a href="lab.html" data-router-link>Lab</a>
+        </div>
+      </nav>
+    </header>
+    <main id="main" tabindex="-1">
+      <section class="section case-hero" aria-labelledby="case-title">
+        <h1 id="case-title" data-split="line"></h1>
+        <p class="reveal" data-case="summary"></p>
+        <div class="tag" data-case="impact"></div>
+      </section>
+      <section class="section case-sections">
+        <article class="case-block" data-case-block="problem">
+          <h2 data-split="line">Problema</h2>
+          <p></p>
+        </article>
+        <article class="case-block" data-case-block="process">
+          <h2 data-split="line">Proceso</h2>
+          <p></p>
+          <div class="case-gallery" data-gallery="process"></div>
+        </article>
+        <article class="case-block" data-case-block="solution">
+          <h2 data-split="line">Solución</h2>
+          <p></p>
+          <div class="case-gallery" data-gallery="solution"></div>
+        </article>
+        <article class="case-block" data-case-block="impact">
+          <h2 data-split="line">Impacto</h2>
+          <p></p>
+        </article>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-inner">
+        <span>© <span data-current-year></span> Juana Saavedra.</span>
+        <div class="footer-trace" data-footer-trace></div>
+        <div class="socials">
+          <a href="mailto:jusaavedrar@ieee.org">Email</a>
+          <a href="https://wa.me/51999999999" target="_blank" rel="noreferrer">WhatsApp</a>
+          <a href="index.html" data-router-link>Inicio</a>
+        </div>
+      </div>
+    </footer>
+    <div class="lightbox" role="dialog" aria-modal="true" aria-labelledby="lightbox-title">
+      <div class="lightbox-content">
+        <button class="lightbox-prev" aria-label="Proyecto anterior">◀</button>
+        <button class="lightbox-next" aria-label="Proyecto siguiente">▶</button>
+        <button class="lightbox-close" aria-label="Cerrar">✕</button>
+        <div class="lightbox-img" id="lightbox-visual" role="img" aria-labelledby="lightbox-title"></div>
+        <h3 id="lightbox-title"></h3>
+        <p id="lightbox-desc"></p>
+      </div>
+    </div>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
