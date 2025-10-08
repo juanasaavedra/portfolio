@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Juana Saavedra — Portfolio</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-view="home">
+    <div class="page-mask" aria-hidden="true"></div>
+    <div class="cursor" aria-hidden="true"></div>
+    <header class="site-header" data-router-link>
+      <nav>
+        <a class="logo" href="index.html" data-router-link>
+          <img src="assets/logo.svg" width="32" height="32" alt="Juana Saavedra" />
+          <span>Juana Saavedra</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html#servicios" data-router-link>Servicios</a>
+          <a href="index.html#trabajos" data-router-link>Trabajos</a>
+          <a href="index.html#sobre" data-router-link>Sobre mí</a>
+          <a href="index.html#contacto" data-router-link>Contacto</a>
+          <a href="lab.html" data-router-link>Lab</a>
+        </div>
+      </nav>
+    </header>
+    <main id="main" tabindex="-1" data-timeline>
+      <section class="hero-stage" data-stage="hero" aria-labelledby="hero-title">
+        <div class="hero-sticky">
+          <div class="hero-grid">
+            <div class="hero-copy" data-hero-copy>
+              <p class="hero-label" data-split="word">INGENIERÍA + EXPERIENCIA</p>
+              <h1 id="hero-title" data-split="line">Interfaces editoriales para producto, datos y relato técnico.</h1>
+              <p class="hero-sub" data-content="heroSubtitle"></p>
+              <div class="hero-actions">
+                <a href="#contacto" class="btn btn-primary" data-magnetic data-router-link>Trabajemos juntos</a>
+                <a href="#trabajos" class="btn btn-ghost" data-router-link>Ver trabajos</a>
+              </div>
+            </div>
+            <aside class="hero-scene" data-parallax>
+              <div class="hero-card" data-microcard>
+                <svg class="microcontroller" viewBox="0 0 480 360" role="img" aria-label="Microcontrolador creativo">
+                  <defs>
+                    <linearGradient id="cardShade" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="rgba(14,15,18,0.9)" />
+                      <stop offset="100%" stop-color="rgba(43,47,56,0.65)" />
+                    </linearGradient>
+                  </defs>
+                  <rect x="24" y="24" width="432" height="312" rx="28" fill="url(#cardShade)" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" />
+                  <g class="chip" transform="translate(160 120)">
+                    <rect width="160" height="120" rx="18" fill="#2B2F38" stroke="#FF5DA2" stroke-width="1.4" />
+                    <rect x="22" y="22" width="116" height="76" rx="12" fill="#0E0F12" stroke="rgba(255,255,255,0.08)" stroke-width="1.2" />
+                  </g>
+                  <g class="pads" stroke="#E6A3B2" stroke-width="4" stroke-linecap="round">
+                    <line x1="96" y1="56" x2="384" y2="56" />
+                    <line x1="96" y1="304" x2="384" y2="304" />
+                    <line x1="56" y1="96" x2="56" y2="264" />
+                    <line x1="424" y1="96" x2="424" y2="264" />
+                  </g>
+                  <g class="cables" stroke="rgba(255,93,162,0.55)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path data-cable="1" d="M240 180 C 240 140, 120 120, 72 96" />
+                    <path data-cable="2" d="M240 180 C 280 150, 408 144, 432 120" />
+                    <path data-cable="3" d="M240 180 C 220 220, 120 240, 64 280" />
+                    <path data-cable="4" d="M240 180 C 300 220, 388 240, 416 300" />
+                  </g>
+                  <g class="charges" fill="#F7F3ED">
+                    <circle r="3" data-charge="1"></circle>
+                    <circle r="3" data-charge="2"></circle>
+                    <circle r="3" data-charge="3"></circle>
+                    <circle r="3" data-charge="4"></circle>
+                  </g>
+                </svg>
+                <div class="hero-gradient" aria-hidden="true"></div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section id="servicios" class="section services-stage" data-stage="services" aria-labelledby="services-title">
+        <h2 id="services-title" data-split="line">Servicios que unen método, sensibilidad y entrega.</h2>
+        <div class="services-grid" data-services></div>
+      </section>
+
+      <section id="trabajos" class="section projects-stage" data-stage="projects" aria-labelledby="works-title">
+        <div class="section-header">
+          <h2 id="works-title" data-split="line">Proyectos como módulos conectados de impacto.</h2>
+          <div class="works-filter" role="toolbar" aria-label="Filtrar proyectos" data-filters></div>
+        </div>
+        <div class="works-carousel" data-works></div>
+        <div class="cable-network" data-cable-network></div>
+      </section>
+
+      <section class="section manifesto-stage" data-stage="process" aria-labelledby="manifesto-title">
+        <div class="process-panel">
+          <h2 id="manifesto-title" data-split="line">Manifiesto y proceso editorial de ingeniería.</h2>
+          <p class="reveal" data-content="manifesto"></p>
+          <ul class="reveal" data-process></ul>
+        </div>
+      </section>
+
+      <section id="sobre" class="section about-stage" data-stage="about" aria-labelledby="about-title">
+        <div class="about-copy">
+          <h2 id="about-title" data-split="line">Perfil híbrido que traduce datos en experiencias humanas.</h2>
+          <p class="reveal" data-content="about"></p>
+          <div class="skill-chips" data-skills></div>
+        </div>
+        <div class="about-logos">
+          <h3 data-split="line">Colaboraciones</h3>
+          <div class="logo-row" data-logos></div>
+        </div>
+      </section>
+
+      <section id="contacto" class="section contact-stage" data-stage="contact" aria-labelledby="contact-title">
+        <div class="contact-inner">
+          <h2 id="contact-title" data-split="line">Contacto directo para un circuito de lanzamiento impecable.</h2>
+          <form class="contact-form" novalidate aria-describedby="contact-status">
+            <label>
+              <span>Nombre</span>
+              <input type="text" name="name" autocomplete="name" required />
+            </label>
+            <label>
+              <span>Email</span>
+              <input type="email" name="email" autocomplete="email" required />
+            </label>
+            <label>
+              <span>Mensaje</span>
+              <textarea name="message" required minlength="12"></textarea>
+            </label>
+            <button type="submit" class="btn btn-primary" data-magnetic>Enviar</button>
+            <p id="contact-status" class="status-message" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <span>© <span data-current-year></span> Juana Saavedra. Interfaces con ingeniería visual.</span>
+        <div class="footer-trace" data-footer-trace></div>
+        <div class="socials">
+          <a href="mailto:jusaavedrar@ieee.org">Email</a>
+          <a href="https://wa.me/51999999999" target="_blank" rel="noreferrer">WhatsApp</a>
+          <a href="https://www.behance.net" target="_blank" rel="noreferrer">Behance</a>
+        </div>
+      </div>
+    </footer>
+
+    <div class="lightbox" role="dialog" aria-modal="true" aria-labelledby="lightbox-title">
+      <div class="lightbox-content">
+        <button class="lightbox-prev" aria-label="Proyecto anterior">◀</button>
+        <button class="lightbox-next" aria-label="Proyecto siguiente">▶</button>
+        <button class="lightbox-close" aria-label="Cerrar">✕</button>
+        <div class="lightbox-img" id="lightbox-visual" role="img" aria-labelledby="lightbox-title"></div>
+        <h3 id="lightbox-title"></h3>
+        <p id="lightbox-desc"></p>
+      </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
