@@ -235,9 +235,28 @@ document.addEventListener('DOMContentLoaded', () => {
   document.body.dataset.motion = isMotionReduced() ? 'reduced' : 'active';
   hydratePage(document);
   if (!isMotionReduced()) {
-    animateMask('in');
+    animateInitialMask();
   }
 });
+
+function animateInitialMask() {
+  const mask = document.querySelector('.page-mask');
+  if (!mask) return;
+  
+  // Start with full circle
+  mask.style.setProperty('--hero-mask-circle', '100%');
+  mask.style.opacity = '1';
+  
+  // Animate to 0 after a brief delay
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      mask.style.setProperty('--hero-mask-circle', '0%');
+      setTimeout(() => {
+        mask.style.opacity = '0';
+      }, 800);
+    });
+  });
+}
 
 function hydratePage(rootDoc) {
   cleanupFns.forEach((fn) => fn && fn());
@@ -338,10 +357,11 @@ function populateHome() {
     });
   }
 
-  const microcardSvg = document.querySelector('.microcontroller');
-  const microcardController = initHeroMicrocard(microcardSvg);
-  if (microcardController && microcardController.dispose) {
-    cleanupFns.push(() => microcardController.dispose());
+  // New hero SVG animation setup
+  const heroSvg = document.querySelector('.micro-svg');
+  const heroController = heroSvg ? initHeroSvgAnimation(heroSvg) : null;
+  if (heroController && heroController.dispose) {
+    cleanupFns.push(() => heroController.dispose());
   }
 
   const processPanel = document.querySelector('.process-panel');
@@ -361,7 +381,7 @@ function populateHome() {
     scrollStoryCleanup = null;
   }
   scrollStoryCleanup = setupScrollStory({
-    microcard: microcardController,
+    microcard: heroController,
     process: processController,
     workCards,
   });
@@ -526,6 +546,102 @@ function buildLogoSketch(label) {
   `;
 }
 
+function initHeroSvgAnimation(svg) {
+  if (!svg) return {};
+  
+  const prefersReduced = isMotionReduced();
+  const cables = Array.from(svg.querySelectorAll('[data-cable]'));
+  const charges = Array.from(svg.querySelectorAll('[data-charge]'));
+  
+  if (!cables.length) {
+    return {};
+  }
+
+  // Compute path lengths and set stroke-dasharray
+  const lengths = cables.map((path) => path.getTotalLength());
+  cables.forEach((path, idx) => {
+    const length = lengths[idx];
+    path.style.strokeDasharray = `${length}`;
+    path.style.strokeDashoffset = prefersReduced ? '0' : `${length}`;
+    path.style.setProperty('--hero-cable-length', `${length}`);
+  });
+
+  let cableProgress = prefersReduced ? 1 : 0;
+  let chipScale = 1;
+  let loopProgress = 0;
+  let rafId = null;
+
+  // Charge animation speeds (different speeds for variety)
+  const chargeSpeeds = [0.003, 0.0025, 0.0035, 0.004, 0.0028];
+
+  const updateCharges = () => {
+    if (prefersReduced) {
+      // Place charges statically at path starts
+      charges.forEach((circle, idx) => {
+        const path = cables[idx % cables.length];
+        const point = path.getPointAtLength(0);
+        circle.style.transform = `translate(${point.x}px, ${point.y}px)`;
+      });
+      return;
+    }
+
+    charges.forEach((circle, idx) => {
+      const path = cables[idx % cables.length];
+      const length = lengths[idx % lengths.length];
+      const speed = chargeSpeeds[idx % chargeSpeeds.length];
+      const travel = (loopProgress * speed * 100 + idx * 0.2) % 1;
+      const distance = length * travel * Math.min(cableProgress * 1.5, 1);
+      const point = path.getPointAtLength(distance);
+      circle.style.transform = `translate(${point.x}px, ${point.y}px)`;
+    });
+  };
+
+  const tick = () => {
+    loopProgress = (loopProgress + 1) % 1000;
+    updateCharges();
+    rafId = requestAnimationFrame(tick);
+  };
+
+  const setCableProgress = (value) => {
+    cableProgress = clamp(value, 0, 1);
+    svg.style.setProperty('--hero-cable-progress', cableProgress);
+    updateCharges();
+  };
+
+  const setChipScale = (value) => {
+    chipScale = clamp(value, 0.96, 1);
+    svg.style.setProperty('--chip-scale', chipScale);
+  };
+
+  const setParallax = (value) => {
+    if (prefersReduced) return;
+    const offset = lerp(-8, 8, value);
+    svg.style.transform = `translateY(${offset}px)`;
+  };
+
+  const dispose = () => {
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+  };
+
+  // Initialize
+  if (prefersReduced) {
+    setCableProgress(1);
+    updateCharges();
+  } else {
+    tick();
+  }
+
+  return {
+    setCableProgress,
+    setChipScale,
+    setParallax,
+    dispose,
+  };
+}
+
 function setupScrollStory({ microcard, process, workCards }) {
   const heroStage = document.querySelector('.hero-stage');
   const servicesStage = document.querySelector('.services-stage');
@@ -640,19 +756,33 @@ function applyScrollState(progress, context) {
     const fade = clamp((progress - 0.12) / 0.1, 0, 1);
     heroStage.style.setProperty('--hero-mask-opacity', `${1 - fade}`);
   }
+  
+  // Cable progress and chip scale
   microcard?.setCableProgress?.(easeInOut(heroMaskProgress));
+  const chipScaleProgress = eased(0.05, 0.15);
+  const chipScale = lerp(1, 0.98, easeOut(chipScaleProgress));
+  microcard?.setChipScale?.(chipScale);
+  
+  // Parallax
+  const parallaxProgress = eased(0, 0.3);
+  microcard?.setParallax?.(parallaxProgress);
 
-  const heroDetail = eased(0.1, 0.25);
-  const cardElement = document.querySelector('[data-microcard]');
-  if (cardElement) {
-    const tilt = lerp(0, 1.8, easeOut(heroDetail));
-    const offsetX = lerp(0, 12, easeOut(heroDetail));
-    const offsetY = lerp(0, -10, easeOut(heroDetail));
-    cardElement.style.setProperty('--hero-card-tilt', `${tilt}deg`);
-    cardElement.style.setProperty('--hero-card-x', `${offsetX}px`);
-    cardElement.style.setProperty('--hero-card-y', `${offsetY}px`);
+  // Reveal subtitle and CTAs
+  const revealProgress = eased(0.08, 0.18);
+  const heroSub = document.querySelector('.hero-sub');
+  const heroActions = document.querySelector('.hero-actions');
+  if (heroSub) {
+    const subEase = easeOut(revealProgress);
+    heroSub.style.opacity = subEase;
+    heroSub.style.transform = `translateY(${lerp(16, 0, subEase)}px)`;
+    heroSub.style.filter = `blur(${lerp(6, 0, subEase)}px)`;
   }
-  microcard?.setChargeProgress?.(heroDetail);
+  if (heroActions) {
+    const actionsEase = easeOut(clamp(revealProgress - 0.12, 0, 1) / 0.88);
+    heroActions.style.opacity = actionsEase;
+    heroActions.style.transform = `translateY(${lerp(16, 0, actionsEase)}px)`;
+    heroActions.style.filter = `blur(${lerp(6, 0, actionsEase)}px)`;
+  }
 
   if (servicesStage) {
     const servicesProgress = easeInOut(eased(0.25, 0.45));

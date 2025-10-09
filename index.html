@@ -12,8 +12,8 @@
     <header class="site-header" data-router-link>
       <nav>
         <a class="logo" href="index.html" data-router-link>
-          <img src="assets/logo.svg" width="32" height="32" alt="Juana Saavedra" />
-          <span>Juana Saavedra</span>
+          <img src="assets/logo.svg" width="24" height="24" alt="Juana Saavedra" />
+          <span class="visually-hidden">Juana Saavedra</span>
         </a>
         <div class="nav-links">
           <a href="index.html#servicios" data-router-link>Servicios</a>
@@ -38,40 +38,25 @@
               </div>
             </div>
             <aside class="hero-scene" data-parallax>
-              <div class="hero-card" data-microcard>
-                <svg class="microcontroller" viewBox="0 0 480 360" role="img" aria-label="Microcontrolador creativo">
-                  <defs>
-                    <linearGradient id="cardShade" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0%" stop-color="rgba(14,15,18,0.9)" />
-                      <stop offset="100%" stop-color="rgba(43,47,56,0.65)" />
-                    </linearGradient>
-                  </defs>
-                  <rect x="24" y="24" width="432" height="312" rx="28" fill="url(#cardShade)" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" />
-                  <g class="chip" transform="translate(160 120)">
-                    <rect width="160" height="120" rx="18" fill="#2B2F38" stroke="#FF5DA2" stroke-width="1.4" />
-                    <rect x="22" y="22" width="116" height="76" rx="12" fill="#0E0F12" stroke="rgba(255,255,255,0.08)" stroke-width="1.2" />
-                  </g>
-                  <g class="pads" stroke="#E6A3B2" stroke-width="4" stroke-linecap="round">
-                    <line x1="96" y1="56" x2="384" y2="56" />
-                    <line x1="96" y1="304" x2="384" y2="304" />
-                    <line x1="56" y1="96" x2="56" y2="264" />
-                    <line x1="424" y1="96" x2="424" y2="264" />
-                  </g>
-                  <g class="cables" stroke="rgba(255,93,162,0.55)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path data-cable="1" d="M240 180 C 240 140, 120 120, 72 96" />
-                    <path data-cable="2" d="M240 180 C 280 150, 408 144, 432 120" />
-                    <path data-cable="3" d="M240 180 C 220 220, 120 240, 64 280" />
-                    <path data-cable="4" d="M240 180 C 300 220, 388 240, 416 300" />
-                  </g>
-                  <g class="charges" fill="#F7F3ED">
-                    <circle r="3" data-charge="1"></circle>
-                    <circle r="3" data-charge="2"></circle>
-                    <circle r="3" data-charge="3"></circle>
-                    <circle r="3" data-charge="4"></circle>
-                  </g>
-                </svg>
-                <div class="hero-gradient" aria-hidden="true"></div>
-              </div>
+              <svg class="micro-svg" width="420" height="320" viewBox="0 0 420 320" role="img" aria-label="Microcontrolador creativo">
+                <g class="chip" transform="translate(120 80)">
+                  <rect width="180" height="160" rx="28" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" style="transform: scale(var(--chip-scale, 1)); transform-origin: center;" />
+                </g>
+                <g class="cables" stroke="rgba(255,93,162,0.45)" stroke-width="1.5" fill="none" stroke-linecap="round">
+                  <path data-cable="0" d="M 210 160 C 180 120, 120 80, 50 20" />
+                  <path data-cable="1" d="M 210 160 C 260 140, 340 110, 400 60" />
+                  <path data-cable="2" d="M 210 160 C 190 220, 140 260, 70 300" />
+                  <path data-cable="3" d="M 210 160 C 270 200, 340 240, 390 290" />
+                  <path data-cable="4" d="M 210 160 C 210 100, 210 60, 210 10" />
+                </g>
+                <g class="charges" fill="#F7F3ED">
+                  <circle r="3" id="charge-0" data-charge="0"></circle>
+                  <circle r="3" id="charge-1" data-charge="1"></circle>
+                  <circle r="3" id="charge-2" data-charge="2"></circle>
+                  <circle r="3" id="charge-3" data-charge="3"></circle>
+                  <circle r="3" id="charge-4" data-charge="4"></circle>
+                </g>
+              </svg>
             </aside>
           </div>
         </div>
