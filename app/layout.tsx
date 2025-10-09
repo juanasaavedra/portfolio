@@ -1,86 +1,46 @@
-import type { Metadata } from "next";
-import "@/styles/globals.css";
-import { Plus_Jakarta_Sans, IBM_Plex_Mono } from "next/font/google";
-import Link from "next/link";
-import Image from "next/image";
-import { MotionRoot } from "@/components/MotionRoot";
-import { LangToggle } from "@/components/LangToggle";
-import site from "@/content/site.es.json";
+import type { Metadata } from 'next';
+import { Manrope, DM_Sans } from 'next/font/google';
+import './globals.css';
+import { Providers } from '@/components/Providers';
+import { Navigation } from '@/components/Navigation';
+import { Footer } from '@/components/Footer';
 
-const sans = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
+const sans = Manrope({
+  subsets: ['latin'],
+  variable: '--font-sans'
 });
 
-const mono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  weight: ["400", "500", "600"],
-  display: "swap",
+const display = DM_Sans({
+  subsets: ['latin'],
+  variable: '--font-display',
+  style: ['italic'],
+  weight: ['500', '600']
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://juana-saavedra-portfolio.example"),
-  title: `${site.brand} · Portfolio`,
-  description: site.hero.subtitle,
-  icons: {
-    icon: "/icons/logo.svg",
+  metadataBase: new URL('https://uno-estudiante.example'),
+  title: {
+    default: 'UNO Estudiante',
+    template: '%s | UNO Estudiante'
   },
-  openGraph: {
-    title: `${site.brand} · Experiencias científicas`,
-    description: site.hero.subtitle,
-    type: "website",
-    images: [
-      {
-        url: "/icons/logo.svg",
-        width: 512,
-        height: 512,
-        alt: site.brand,
-      },
-    ],
-  },
+  description: 'Lo único que necesitas como estudiante: cursos, guías y tutorías en un solo lugar.'
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="es" className={`${sans.variable} ${mono.variable}`} suppressHydrationWarning>
-      <body className="bg-anthracite text-slate-100">
-        <div className="relative min-h-screen">
-          <div className="absolute inset-0 -z-10 bg-gridNoise opacity-30" aria-hidden />
-          <header className="sticky top-0 z-30 border-b border-white/5 bg-anthracite/80 backdrop-blur-xl">
-            <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-5">
-              <Link href="/" className="flex items-center gap-3 text-sm font-mono uppercase tracking-[0.3em] text-slate-200">
-                <Image src="/icons/logo.svg" alt="Juana Saavedra" width={32} height={32} className="h-8 w-8" />
-                {site.brand}
-              </Link>
-              <nav className="hidden items-center gap-6 text-xs font-mono uppercase tracking-[0.3em] text-slate-400 md:flex">
-                <Link href="#servicios" className="hover:text-accent focus-visible:text-accent">
-                  Servicios
-                </Link>
-                <Link href="#visualizaciones" className="hover:text-accent focus-visible:text-accent">
-                  Visualizaciones
-                </Link>
-                <Link href="#casos" className="hover:text-accent focus-visible:text-accent">
-                  Casos
-                </Link>
-                <Link href="#contacto" className="hover:text-accent focus-visible:text-accent">
-                  Contacto
-                </Link>
-              </nav>
-              <LangToggle />
-            </div>
-          </header>
-          <MotionRoot>
-            <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6 py-16 pb-24">
-              {children}
-              <footer className="mt-20 border-t border-white/5 pt-6 text-xs text-slate-500">
-                © {new Date().getFullYear()} {site.brand}. Construido con Next.js, R3F y ciencia visual.
-              </footer>
-            </div>
-          </MotionRoot>
-        </div>
+    <html lang="es" className={`${sans.variable} ${display.variable}`} suppressHydrationWarning>
+      <body className="bg-brand-base text-brand-text antialiased">
+        <Providers>
+          <Navigation />
+          <main className="mx-auto min-h-screen w-[min(1200px,94vw)] pb-16 pt-24">
+            {children}
+          </main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

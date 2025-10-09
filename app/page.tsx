@@ -1,160 +1,109 @@
-import dynamic from "next/dynamic";
-import Link from "next/link";
-import site from "@/content/site.es.json";
-import { ServicesGrid } from "@/components/ServicesGrid";
-import { CaseCard } from "@/components/CaseCard";
-import { ProcessTimeline } from "@/components/ProcessTimeline";
-import { ContactForm } from "@/components/ContactForm";
-import { SectionReveal } from "@/components/SectionReveal";
+import Image from 'next/image';
+import Link from 'next/link';
+import { prisma } from '@/lib/prisma';
+import { CourseCard } from '@/components/CourseCard';
+import { GuideCard } from '@/components/GuideCard';
 
-const HeroScene = dynamic(() => import("@/components/HeroScene").then((mod) => mod.HeroScene), {
-  ssr: false,
-  loading: () => <div className="h-full w-full rounded-3xl bg-gradient-to-br from-[#1A1A24] to-[#101016]" />,
-});
+export default async function HomePage() {
+  const [courses, guides] = await Promise.all([
+    prisma.course.findMany({ orderBy: { createdAt: 'asc' }, take: 3 }),
+    prisma.guide.findMany({ orderBy: { createdAt: 'asc' }, take: 3 })
+  ]);
 
-const VectorField = dynamic(() => import("@/components/VectorField").then((mod) => mod.VectorField), {
-  ssr: false,
-  loading: () => <div className="h-80 w-full rounded-3xl border border-white/5 bg-black/40" />,
-});
-
-const LossLandscape = dynamic(() => import("@/components/LossLandscape").then((mod) => mod.LossLandscape), {
-  ssr: false,
-  loading: () => <div className="h-80 w-full rounded-3xl border border-white/5 bg-black/40" />,
-});
-
-const NeuralDiagram = dynamic(() => import("@/components/NeuralDiagram").then((mod) => mod.NeuralDiagram), {
-  ssr: false,
-  loading: () => <div className="h-80 w-full rounded-3xl border border-white/5 bg-black/40" />,
-});
-
-export default function HomePage() {
   return (
-    <>
-      <section className="grid min-h-[80vh] items-center gap-10 md:grid-cols-[minmax(0,1fr),minmax(0,1.1fr)]">
-        <div className="flex flex-col justify-center gap-6">
-          <p className="text-xs font-mono uppercase tracking-[0.4em] text-accent">Juana Saavedra · Visual Computing</p>
-          <h1 className="text-4xl italic text-white md:text-5xl">{site.hero.title}</h1>
-          <p className="max-w-xl text-lg text-slate-300">{site.hero.subtitle}</p>
-          <div className="flex flex-wrap gap-4">
+    <div className="space-y-24">
+      <section className="grid gap-12 md:grid-cols-[1.2fr_0.8fr]">
+        <div className="space-y-6">
+          <span className="inline-flex items-center rounded-full border border-brand-accent/40 bg-brand-support/10 px-4 py-2 text-xs uppercase tracking-[0.28em] text-brand-support">
+            UNO ESTUDIANTE
+          </span>
+          <h1 className="font-display text-[clamp(42px,7vw,92px)] italic leading-[0.98] text-brand-text">
+            Lo único que necesitas como estudiante: cursos, guías y tutorías en un solo lugar.
+          </h1>
+          <p className="max-w-[60ch] text-base text-brand-text/80">
+            Acompañamos tu semestre con mentorías personalizadas, contenidos diseñados para la vida académica y recursos que se
+            adaptan a tu ritmo. Un sistema integral para aprender, practicar y llegar tranquilo a cada entrega.
+          </p>
+          <div className="flex flex-wrap gap-3">
             <Link
-              href={`mailto:${site.hero.ctaPrimary.href}`}
-              className="rounded-full border border-accent bg-accent/10 px-6 py-3 text-sm font-mono uppercase tracking-[0.35em] text-accent transition hover:border-accentSoft hover:text-accentSoft"
+              href="/tutorias"
+              className="inline-flex items-center justify-center rounded-full border border-brand-support/60 bg-brand-accent px-6 py-3 font-semibold text-brand-base transition hover:bg-brand-support"
             >
-              {site.hero.ctaPrimary.label}
+              Reservar tutoría
             </Link>
             <Link
-              href={site.hero.ctaSecondary.href}
-              className="rounded-full border border-white/10 px-6 py-3 text-sm font-mono uppercase tracking-[0.35em] text-slate-200 transition hover:border-accent hover:text-accent"
+              href="/cursos"
+              className="inline-flex items-center justify-center rounded-full border border-white/20 px-6 py-3 text-brand-text transition hover:border-brand-accent"
             >
-              {site.hero.ctaSecondary.label}
+              Ver cursos
             </Link>
-          </div>
-          <div className="mt-6 grid grid-cols-3 gap-6 text-xs text-slate-400">
-            <div>
-              <p className="font-mono uppercase tracking-[0.35em] text-accent">Stack</p>
-              <p className="mt-2 leading-relaxed">React · Next · R3F · Framer Motion · TypeScript</p>
-            </div>
-            <div>
-              <p className="font-mono uppercase tracking-[0.35em] text-accent">Investigación</p>
-              <p className="mt-2 leading-relaxed">Experimentación con cálculo multivariado y visualización.</p>
-            </div>
-            <div>
-              <p className="font-mono uppercase tracking-[0.35em] text-accent">Entrega</p>
-              <p className="mt-2 leading-relaxed">Rendimiento, accesibilidad y métricas claras.</p>
-            </div>
           </div>
         </div>
-        <div className="h-[480px] w-full md:h-[520px]">
-          <HeroScene />
+        <div className="relative flex items-center justify-center">
+          <div className="relative h-[360px] w-full max-w-[480px] overflow-hidden rounded-[32px] border border-white/10 bg-brand-panel/80 p-8 shadow-[0_18px_60px_rgba(0,0,0,0.3)]">
+            <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-transparent to-brand-support/10" />
+            <Image src="/logo.svg" alt="UNO Estudiante" fill sizes="(min-width: 1024px) 480px, 90vw" className="object-contain opacity-40" />
+            <div className="relative space-y-4 text-sm text-brand-text">
+              <h2 className="font-display text-2xl italic text-brand-support">Agenda conectada</h2>
+              <p>
+                Un microcontrolador creativo sincroniza horarios, recordatorios y materiales para que cada tutoría esté lista antes de
+                empezar.
+              </p>
+              <ul className="space-y-2 text-xs text-brand-text/70">
+                <li>• Disponibilidad en tiempo real</li>
+                <li>• Recordatorios automáticos</li>
+                <li>• Notas compartidas después de cada sesión</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
 
-      <SectionReveal>
-        <ServicesGrid services={site.services} />
-      </SectionReveal>
-
-      <SectionReveal className="space-y-6" id="visualizaciones">
-        <header className="flex flex-col gap-2">
-          <p className="text-sm font-mono uppercase tracking-[0.35em] text-accent">Visualizaciones</p>
-          <h2 className="text-3xl italic text-white">Machine learning tangible</h2>
-          <p className="max-w-3xl text-sm text-slate-300">
-            Conecta usuarios con modelos matemáticos complejos. Cada módulo se adapta a preferencias de movimiento y ofrece controles interactivos.
-          </p>
-        </header>
-        <div className="space-y-6">
-          <VectorField />
-          <LossLandscape />
-          <NeuralDiagram />
+      <section className="space-y-10">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <span className="text-xs uppercase tracking-[0.24em] text-brand-support">Tutorías</span>
+            <h2 className="font-display text-4xl italic text-brand-text">Agenda personalizada</h2>
+          </div>
+          <Link href="/tutorias" className="text-sm text-brand-support hover:text-brand-accent">
+            Agendar ahora →
+          </Link>
         </div>
-      </SectionReveal>
-
-      <SectionReveal id="casos" className="space-y-8">
-        <header className="flex flex-col gap-2">
-          <p className="text-sm font-mono uppercase tracking-[0.35em] text-accent">Casos</p>
-          <h2 className="text-3xl italic text-white">Proyectos seleccionados</h2>
-          <p className="max-w-2xl text-sm text-slate-300">Cada proyecto integra investigación, visualización avanzada y métricas de impacto.</p>
-        </header>
         <div className="grid gap-6 md:grid-cols-3">
-          {site.cases.map((item) => (
-            <CaseCard key={item.slug} item={item} />
+          {courses.map((course) => (
+            <CourseCard
+              key={course.id}
+              id={course.id}
+              title={course.title}
+              description={course.description}
+              paymentLink={course.paymentLink}
+            />
           ))}
         </div>
-      </SectionReveal>
+      </section>
 
-      <SectionReveal>
-        <ProcessTimeline />
-      </SectionReveal>
-
-      <SectionReveal className="grid gap-10 lg:grid-cols-[minmax(0,1fr),380px]">
-        <div className="rounded-3xl border border-white/5 bg-black/40 p-6 backdrop-blur-xl">
-          <p className="text-sm uppercase tracking-[0.3em] text-accent">Sobre mí</p>
-          <h3 className="text-3xl italic text-white">Confianza basada en ciencia</h3>
-          <p className="mt-4 text-sm text-slate-300">{site.about.bio}</p>
-          <div className="mt-6 flex flex-wrap gap-3 text-xs font-mono uppercase tracking-[0.35em] text-slate-400">
-            {site.about.skills.map((skill) => (
-              <span key={skill} className="rounded-full border border-white/10 px-3 py-1">
-                {skill}
-              </span>
-            ))}
+      <section className="space-y-10">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <span className="text-xs uppercase tracking-[0.24em] text-brand-support">Guías</span>
+            <h2 className="font-display text-4xl italic text-brand-text">Recursos para tus entregas</h2>
           </div>
-          <div className="mt-8 grid gap-3 text-xs text-slate-400 md:grid-cols-2">
-            <div className="rounded-2xl border border-white/10 bg-black/40 p-4">
-              <p className="font-mono uppercase tracking-[0.35em] text-accent">Colaboraciones</p>
-              <ul className="mt-3 space-y-1">
-                <li>IEEE Human Factors</li>
-                <li>Startups IA LatAm</li>
-              </ul>
-            </div>
-            <div className="rounded-2xl border border-white/10 bg-black/40 p-4">
-              <p className="font-mono uppercase tracking-[0.35em] text-accent">Herramientas</p>
-              <ul className="mt-3 space-y-1">
-                <li>Observabilidad UX</li>
-                <li>DataViz científicas</li>
-              </ul>
-            </div>
-          </div>
+          <Link href="/guias" className="text-sm text-brand-support hover:text-brand-accent">
+            Ver más guías →
+          </Link>
         </div>
-        <div className="rounded-3xl border border-white/5 bg-black/40 p-6 backdrop-blur-xl">
-          <p className="text-sm uppercase tracking-[0.35em] text-accent">Testimonios</p>
-          <div className="group mt-4 overflow-hidden">
-            <div className="testimonial-marquee flex animate-marquee gap-6 group-hover:[animation-play-state:paused]">
-              {site.about.testimonials.concat(site.about.testimonials).map((testimonial, index) => (
-                <blockquote
-                  key={`${testimonial.author}-${index}`}
-                  className="min-w-[220px] max-w-xs rounded-2xl border border-white/10 bg-black/60 p-4 text-sm text-slate-200"
-                >
-                  “{testimonial.quote}”
-                  <footer className="mt-3 text-xs text-accent">— {testimonial.author}</footer>
-                </blockquote>
-              ))}
-            </div>
-          </div>
+        <div className="grid gap-6 md:grid-cols-3">
+          {guides.map((guide) => (
+            <GuideCard
+              key={guide.id}
+              title={guide.title}
+              description={guide.description}
+              subject={guide.subject}
+              price={guide.price}
+            />
+          ))}
         </div>
-      </SectionReveal>
-
-      <SectionReveal>
-        <ContactForm title={site.contact.title} cta={site.contact.cta} />
-      </SectionReveal>
-    </>
+      </section>
+    </div>
   );
 }

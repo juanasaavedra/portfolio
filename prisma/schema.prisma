@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Booking {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  topic     String
+  notes     String?
+  start     DateTime
+  end       DateTime
+  createdAt DateTime @default(now())
+}
+
+model Course {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  paymentLink String
+  createdAt   DateTime @default(now())
+  enrollments Enrollment[]
+}
+
+model Enrollment {
+  id        String   @id @default(cuid())
+  courseId  String
+  name      String
+  email     String
+  createdAt DateTime @default(now())
+
+  course Course @relation(fields: [courseId], references: [id])
+}
+
+model Guide {
+  id          String   @id @default(cuid())
+  subject     String
+  title       String
+  description String
+  price       String
+  createdAt   DateTime @default(now())
+}
