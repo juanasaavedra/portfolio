@@ -6,6 +6,10 @@ let currentProject = null;
 let cursorPosition = { x: 0, y: 0 };
 let previewPosition = { x: 0, y: 0 };
 let isPreviewVisible = false;
+let activeFilters = { years: [], roles: [], client: '' };
+let filteredProjects = [];
+let currentFocusIndex = -1;
+let previewHideTimeout = null;
 
 // Reduced motion check
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -43,11 +47,14 @@ function initializeView() {
   switch (view) {
     case 'archive':
       buildArchive();
+      buildFilters();
       setupArchivePreview();
+      setupFilters();
       break;
     case 'detail':
       buildDetail();
       setupScrollProgress();
+      setupLazyLoading();
       break;
     case 'about':
       // About page is static HTML, no dynamic content needed
@@ -65,12 +72,15 @@ function buildArchive() {
   
   archiveList.innerHTML = '';
   
-  projects.forEach((project) => {
+  const projectsToShow = filteredProjects.length > 0 ? filteredProjects : projects;
+  
+  projectsToShow.forEach((project) => {
     const row = document.createElement('a');
     row.className = 'archive-row';
     row.href = `detail.html?project=${project.slug}`;
     row.dataset.slug = project.slug;
     row.dataset.thumb = project.thumb;
+    row.tabIndex = 0;
     
     row.innerHTML = `
       <div class="archive-row-title">${project.title}</div>
@@ -82,6 +92,109 @@ function buildArchive() {
     
     archiveList.appendChild(row);
   });
+}
+
+// Build Filter Chips
+function buildFilters() {
+  const filterChips = document.querySelector('[data-filter-chips]');
+  if (!filterChips) return;
+  
+  // Extract unique years and roles
+  const years = [...new Set(projects.map(p => p.year))].sort().reverse();
+  const roles = [...new Set(projects.flatMap(p => p.role.split(',').map(r => r.trim())))];
+  
+  // Build year chips
+  years.forEach(year => {
+    const chip = document.createElement('button');
+    chip.className = 'filter-chip';
+    chip.dataset.type = 'year';
+    chip.dataset.value = year;
+    chip.textContent = year;
+    filterChips.appendChild(chip);
+  });
+  
+  // Build role chips
+  roles.forEach(role => {
+    const chip = document.createElement('button');
+    chip.className = 'filter-chip';
+    chip.dataset.type = 'role';
+    chip.dataset.value = role;
+    chip.textContent = role;
+    filterChips.appendChild(chip);
+  });
+}
+
+// Setup Filter Handlers
+function setupFilters() {
+  const filterChips = document.querySelectorAll('.filter-chip');
+  const clientSearch = document.querySelector('[data-client-search]');
+  
+  // Filter initialized with all projects
+  filteredProjects = [...projects];
+  
+  // Chip click handler
+  filterChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const type = chip.dataset.type;
+      const value = chip.dataset.value;
+      
+      chip.classList.toggle('is-active');
+      
+      if (type === 'year') {
+        const index = activeFilters.years.indexOf(value);
+        if (index > -1) {
+          activeFilters.years.splice(index, 1);
+        } else {
+          activeFilters.years.push(value);
+        }
+      } else if (type === 'role') {
+        const index = activeFilters.roles.indexOf(value);
+        if (index > -1) {
+          activeFilters.roles.splice(index, 1);
+        } else {
+          activeFilters.roles.push(value);
+        }
+      }
+      
+      applyFilters();
+    });
+  });
+  
+  // Client search handler
+  if (clientSearch) {
+    clientSearch.addEventListener('input', (e) => {
+      activeFilters.client = e.target.value.toLowerCase().trim();
+      applyFilters();
+    });
+  }
+}
+
+// Apply Filters
+function applyFilters() {
+  filteredProjects = projects.filter(project => {
+    // Year filter
+    if (activeFilters.years.length > 0 && !activeFilters.years.includes(project.year)) {
+      return false;
+    }
+    
+    // Role filter
+    if (activeFilters.roles.length > 0) {
+      const projectRoles = project.role.split(',').map(r => r.trim());
+      const hasRole = activeFilters.roles.some(role => projectRoles.includes(role));
+      if (!hasRole) return false;
+    }
+    
+    // Client filter
+    if (activeFilters.client && !project.client.toLowerCase().includes(activeFilters.client)) {
+      return false;
+    }
+    
+    return true;
+  });
+  
+  buildArchive();
+  setupArchivePreview();
+  updateWorkCount();
 }
 
 // Setup Archive Preview on Hover
@@ -98,7 +211,17 @@ function setupArchivePreview() {
       const thumb = row.dataset.thumb;
       const img = previewFloat.querySelector('img');
       
+      // Clear any pending hide timeout (hysteresis)
+      if (previewHideTimeout) {
+        clearTimeout(previewHideTimeout);
+        previewHideTimeout = null;
+      }
+      
       if (img) {
+        // Prefetch image
+        const prefetchImg = new Image();
+        prefetchImg.src = thumb;
+        
         img.src = thumb;
         img.alt = row.querySelector('.archive-row-title').textContent;
       }
@@ -115,15 +238,18 @@ function setupArchivePreview() {
     });
     
     row.addEventListener('mouseleave', () => {
-      isPreviewVisible = false;
-      previewFloat.classList.remove('is-visible');
-      
-      // Reset cursor
-      const cursor = document.querySelector('.cursor');
-      if (cursor) {
-        cursor.dataset.text = '';
-        cursor.classList.remove('is-hover');
-      }
+      // Add hysteresis delay to avoid flicker
+      previewHideTimeout = setTimeout(() => {
+        isPreviewVisible = false;
+        previewFloat.classList.remove('is-visible');
+        
+        // Reset cursor
+        const cursor = document.querySelector('.cursor');
+        if (cursor) {
+          cursor.dataset.text = '';
+          cursor.classList.remove('is-hover');
+        }
+      }, 100);
     });
   });
 }
@@ -193,10 +319,55 @@ function buildDetail() {
   }
 }
 
+// Setup Lazy Loading with IntersectionObserver
+function setupLazyLoading() {
+  if (prefersReducedMotion) {
+    // If reduced motion, load all images immediately
+    document.querySelectorAll('.gallery-item img').forEach(img => {
+      img.classList.add('is-loaded');
+    });
+    return;
+  }
+  
+  const imageObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        
+        // Prefetch and load image
+        if (img.dataset.src) {
+          img.src = img.dataset.src;
+        }
+        
+        // Add loaded class after image loads
+        if (img.complete) {
+          img.classList.add('is-loaded');
+        } else {
+          img.addEventListener('load', () => {
+            img.classList.add('is-loaded');
+          });
+        }
+        
+        imageObserver.unobserve(img);
+      }
+    });
+  }, {
+    rootMargin: '50px 0px',
+    threshold: 0.01
+  });
+  
+  // Observe all gallery images
+  document.querySelectorAll('.gallery-item img').forEach(img => {
+    imageObserver.observe(img);
+  });
+}
+
 // Setup Scroll Progress Bar
 function setupScrollProgress() {
   const progressBar = document.querySelector('[data-progress-bar]');
   if (!progressBar) return;
+  
+  let ticking = false;
   
   const updateProgress = () => {
     const windowHeight = window.innerHeight;
@@ -213,9 +384,18 @@ function setupScrollProgress() {
       // Desktop: vertical progress on right
       progressBar.style.height = `${scrollPercent}%`;
     }
+    
+    ticking = false;
   };
   
-  window.addEventListener('scroll', updateProgress, { passive: true });
+  const requestTick = () => {
+    if (!ticking) {
+      requestAnimationFrame(updateProgress);
+      ticking = true;
+    }
+  };
+  
+  window.addEventListener('scroll', requestTick, { passive: true });
   updateProgress();
 }
 
@@ -264,8 +444,9 @@ function setupScrollHeader() {
   if (!header) return;
   
   let lastScroll = 0;
+  let ticking = false;
   
-  window.addEventListener('scroll', () => {
+  const updateHeader = () => {
     const currentScroll = window.pageYOffset;
     
     if (currentScroll > 0) {
@@ -275,7 +456,17 @@ function setupScrollHeader() {
     }
     
     lastScroll = currentScroll;
-  }, { passive: true });
+    ticking = false;
+  };
+  
+  const requestTick = () => {
+    if (!ticking) {
+      requestAnimationFrame(updateHeader);
+      ticking = true;
+    }
+  };
+  
+  window.addEventListener('scroll', requestTick, { passive: true });
 }
 
 // Update Current Date
@@ -298,13 +489,35 @@ function updateWorkCount() {
   const countEl = document.querySelector('[data-work-count]');
   if (!countEl) return;
   
-  countEl.textContent = `${projects.length} trabajos`;
+  const count = filteredProjects.length > 0 ? filteredProjects.length : projects.length;
+  countEl.textContent = `${count} trabajos`;
 }
 
 // Keyboard Navigation
 function setupKeyboardNav() {
   document.addEventListener('keydown', (e) => {
     const view = document.body.dataset.view;
+    
+    // Archive view keyboard navigation
+    if (view === 'archive') {
+      const archiveRows = Array.from(document.querySelectorAll('.archive-row'));
+      
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        currentFocusIndex = Math.min(currentFocusIndex + 1, archiveRows.length - 1);
+        if (archiveRows[currentFocusIndex]) {
+          archiveRows[currentFocusIndex].focus();
+        }
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        currentFocusIndex = Math.max(currentFocusIndex - 1, 0);
+        if (archiveRows[currentFocusIndex]) {
+          archiveRows[currentFocusIndex].focus();
+        }
+      } else if (e.key === 'Enter' && currentFocusIndex >= 0 && archiveRows[currentFocusIndex]) {
+        archiveRows[currentFocusIndex].click();
+      }
+    }
     
     // ESC - Go back to archive
     if (e.key === 'Escape' && view === 'detail') {
@@ -321,6 +534,14 @@ function setupKeyboardNav() {
       }
     }
   });
+  
+  // Track focus on archive rows
+  document.addEventListener('focus', (e) => {
+    if (e.target.classList.contains('archive-row')) {
+      const archiveRows = Array.from(document.querySelectorAll('.archive-row'));
+      currentFocusIndex = archiveRows.indexOf(e.target);
+    }
+  }, true);
 }
 
 // Page Transitions (optional, for enhanced experience)
@@ -338,9 +559,12 @@ function transitionToPage(url) {
   
   mask.classList.add('is-transitioning');
   
+  // Random timing between 420-520ms for organic feel
+  const transitionDuration = 420 + Math.random() * 100;
+  
   setTimeout(() => {
     window.location.href = url;
-  }, 500);
+  }, transitionDuration);
 }
 
 // Handle link clicks for transitions
