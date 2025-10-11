@@ -1,0 +1,114 @@
+[
+  {
+    "slug": "analitica-conversacional",
+    "title": "Panel de analítica conversacional",
+    "year": "2024",
+    "role": "UX Lead, Frontend",
+    "client": "Latent Lab",
+    "duration": "3 meses",
+    "thumb": "assets/thumb-analytics.jpg",
+    "images": [
+      {
+        "src": "assets/analytics-1.jpg",
+        "caption": "Vista general del dashboard con métricas en tiempo real",
+        "width": "100%"
+      },
+      {
+        "src": "assets/analytics-2.jpg",
+        "caption": "Visualización tridimensional de patrones de conversación",
+        "width": "80%"
+      },
+      {
+        "src": "assets/analytics-3.jpg",
+        "caption": "Filtros multivariables y anotaciones colaborativas",
+        "width": "60%"
+      }
+    ],
+    "prev": "onboarding-inmersivo",
+    "next": "design-system-aa"
+  },
+  {
+    "slug": "design-system-aa",
+    "title": "Design system accesible AA+",
+    "year": "2023",
+    "role": "Design Lead",
+    "client": "Satelital",
+    "duration": "4 meses",
+    "thumb": "assets/thumb-ds.jpg",
+    "images": [
+      {
+        "src": "assets/ds-1.jpg",
+        "caption": "Tokens y componentes del sistema",
+        "width": "100%"
+      },
+      {
+        "src": "assets/ds-2.jpg",
+        "caption": "Guidelines de accesibilidad AA/AAA",
+        "width": "80%"
+      },
+      {
+        "src": "assets/ds-3.jpg",
+        "caption": "Playground interactivo para pruebas",
+        "width": "60%"
+      }
+    ],
+    "prev": "analitica-conversacional",
+    "next": "simulador-ia"
+  },
+  {
+    "slug": "simulador-ia",
+    "title": "Simulador de IA explicable",
+    "year": "2023",
+    "role": "Frontend, Data Viz",
+    "client": "NeuroFlux",
+    "duration": "5 meses",
+    "thumb": "assets/thumb-ia.jpg",
+    "images": [
+      {
+        "src": "assets/ia-1.jpg",
+        "caption": "Interfaz principal del simulador",
+        "width": "100%"
+      },
+      {
+        "src": "assets/ia-2.jpg",
+        "caption": "Visualización de flujos neurales",
+        "width": "80%"
+      },
+      {
+        "src": "assets/ia-3.jpg",
+        "caption": "Métricas auditables en tiempo real",
+        "width": "60%"
+      }
+    ],
+    "prev": "design-system-aa",
+    "next": "onboarding-inmersivo"
+  },
+  {
+    "slug": "onboarding-inmersivo",
+    "title": "Experiencia inmersiva de onboarding",
+    "year": "2024",
+    "role": "Product Designer, Motion",
+    "client": "Aster Fintech",
+    "duration": "2 meses",
+    "thumb": "assets/thumb-onboarding.jpg",
+    "images": [
+      {
+        "src": "assets/onboarding-1.jpg",
+        "caption": "Pantalla de bienvenida con animaciones suaves",
+        "width": "100%"
+      },
+      {
+        "src": "assets/onboarding-2.jpg",
+        "caption": "Guía narrativa paso a paso",
+        "width": "80%"
+      },
+      {
+        "src": "assets/onboarding-3.jpg",
+        "caption": "Microinteracciones audiovisuales",
+        "width": "60%"
+      }
+    ],
+    "prev": "simulador-ia",
+    "next": "analitica-conversacional"
+  }
+]

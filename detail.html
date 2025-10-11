@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proyecto — Juana Saavedra</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-view="detail">
+    <div class="page-mask" aria-hidden="true"></div>
+    <div class="cursor" aria-hidden="true"></div>
+    <div class="progress-bar" data-progress-bar></div>
+    <header class="site-header" data-scroll-header>
+      <div class="header-container">
+        <a class="wordmark" href="index.html">Juana Saavedra</a>
+        <nav class="nav-links">
+          <a href="index.html">Trabajos</a>
+          <a href="about.html">Sobre mí</a>
+          <a href="contact.html">Contacto</a>
+        </nav>
+        <div class="header-meta">
+          <time data-current-date></time>
+          <span data-work-count></span>
+        </div>
+      </div>
+    </header>
+    <main id="main" class="main-container detail-container">
+      <aside class="detail-meta" data-detail-meta>
+        <h1 data-project-title></h1>
+        <dl class="meta-list">
+          <div class="meta-item">
+            <dt>Año</dt>
+            <dd data-project-year></dd>
+          </div>
+          <div class="meta-item">
+            <dt>Rol</dt>
+            <dd data-project-role></dd>
+          </div>
+          <div class="meta-item">
+            <dt>Cliente</dt>
+            <dd data-project-client></dd>
+          </div>
+          <div class="meta-item">
+            <dt>Duración</dt>
+            <dd data-project-duration></dd>
+          </div>
+        </dl>
+        <nav class="detail-nav">
+          <a href="#" data-prev-project>← Anterior</a>
+          <a href="#" data-next-project>Siguiente →</a>
+          <a href="index.html">↑ Índice</a>
+        </nav>
+      </aside>
+      <div class="detail-gallery" data-detail-gallery>
+        <!-- Images will be dynamically loaded here -->
+      </div>
+    </main>
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
