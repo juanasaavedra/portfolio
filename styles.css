@@ -450,6 +450,10 @@ dt {
   transition: opacity 0.6s var(--easing), filter 0.6s var(--easing);
 }
 
+.gallery-item img:not([src]) {
+  background: var(--line);
+}
+
 .gallery-item img.is-loaded {
   opacity: 1;
   filter: blur(0);

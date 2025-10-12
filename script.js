@@ -309,8 +309,9 @@ function buildDetail() {
       figure.className = 'gallery-item';
       figure.dataset.width = image.width;
       
+      // Use data-src for lazy loading
       figure.innerHTML = `
-        <img src="${image.src}" alt="${image.caption}" loading="lazy" />
+        <img data-src="${image.src}" alt="${image.caption}" loading="lazy" />
         <figcaption>${image.caption}</figcaption>
       `;
       
